@@ -17,9 +17,7 @@ import org.cytoscape.model.json.CyJSONUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.swagger.annotations.Api;
 
-@Api
 public class JSONUtilResourceImpl implements JSONUtilResource
 {
 	private static final Logger logger = LoggerFactory.getLogger(JSONUtilResourceImpl.class);
