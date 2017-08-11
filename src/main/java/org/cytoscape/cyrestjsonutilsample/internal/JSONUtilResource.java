@@ -105,6 +105,17 @@ public interface JSONUtilResource {
 	public String row(@ApiParam(value="Table Type", allowableValues="defaultnode, defaultedge, defaultnetwork")@PathParam("tableType") String tableType, @PathParam("networkSUID") Long networkSUID, @PathParam("primaryKey") Long primaryKey);
 
 	@GET
+	@Path("/networks/{networkSUID}/tables/{tableType}/columns")
+	@ApiOperation (
+			value="Get all the columns in a table", 
+			extensions = { 
+					@Extension(name = CISwaggerConstants.CI_EXTENSION, properties = { @ExtensionProperty(name=CISwaggerConstants.CI_EXTENSION_CI_WRAPPING, value=CISwaggerConstants.TRUE)})}
+			)
+	@Produces(MediaType.APPLICATION_JSON)
+	public String columns(@ApiParam(value="Table Type", allowableValues="defaultnode, defaultedge, defaultnetwork")@PathParam("tableType") String tableType, @PathParam("networkSUID") Long networkSUID);
+
+	
+	@GET
 	@Path("/networks/{networkSUID}/tables/{tableType}/columns/{columnName}")
 	@ApiOperation (
 			value="Get a column", 

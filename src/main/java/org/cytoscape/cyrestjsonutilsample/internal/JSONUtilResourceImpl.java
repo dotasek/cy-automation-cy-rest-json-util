@@ -78,7 +78,7 @@ public class JSONUtilResourceImpl implements JSONUtilResource
 	public String nodes(Long networkSUID) {
 		CyNetwork network = networkManager.getNetwork(networkSUID);
 		List<CyNode> nodes = network.getNodeList();
-		return cyJSONUtil.toJson(nodes);
+		return cyJSONUtil.cyIdentifiablesToJson(nodes);
 	}
 
 	@Override
@@ -96,7 +96,7 @@ public class JSONUtilResourceImpl implements JSONUtilResource
 	public String edges(Long networkSUID) {
 		CyNetwork network = networkManager.getNetwork(networkSUID);
 		List<CyEdge> edges = network.getEdgeList();
-		return cyJSONUtil.toJson(edges);
+		return cyJSONUtil.cyIdentifiablesToJson(edges);
 	}
 
 	@Override
@@ -118,6 +118,14 @@ public class JSONUtilResourceImpl implements JSONUtilResource
 
 	@Override
 	@CIWrapping
+	public String columns(String tableType, Long networkSUID) {
+		CyNetwork network = networkManager.getNetwork(networkSUID);
+		CyTable cyTable = getTable(network, tableType);
+		return cyJSONUtil.cyColumnsToJson(cyTable.getColumns());
+	}
+	
+	@Override
+	@CIWrapping
 	public String column(String tableType, Long networkSUID, String columnName, boolean includeDefinition, boolean includeValues) {
 		CyNetwork network = networkManager.getNetwork(networkSUID);
 		CyTable cyTable = getTable(network, tableType);
@@ -136,6 +144,8 @@ public class JSONUtilResourceImpl implements JSONUtilResource
 	@CIWrapping
 	public String networks() {
 		Set<CyNetwork> networks = networkManager.getNetworkSet();
-		return cyJSONUtil.toJson(networks);
+		return cyJSONUtil.cyIdentifiablesToJson(networks);
 	}
+
+	
 }
