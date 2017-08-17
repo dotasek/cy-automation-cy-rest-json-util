@@ -1,4 +1,4 @@
-package org.cytoscape.cyrestjsonutilsample.internal;
+package org.cytoscape.cyrestjsonutilsample.internal.resource;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Set;
@@ -8,9 +8,9 @@ import org.cytoscape.ci.CIErrorFactory;
 import org.cytoscape.ci.CIExceptionFactory;
 import org.cytoscape.ci.CIWrapping;
 import org.cytoscape.ci.model.CIError;
+import org.cytoscape.cyrestjsonutilsample.internal.ViewWriterFactoryManager;
 import org.cytoscape.io.write.CyNetworkViewWriterFactory;
 import org.cytoscape.io.write.CyWriter;
-import org.cytoscape.model.CyIdentifiable;
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNetworkManager;
 import org.cytoscape.model.json.CyJSONUtil;
@@ -60,10 +60,14 @@ public class CXResourceImpl implements CXResource
 		}
 		
 		if (root == null) {
-			throw exceptionFactory.getCIException(404, new CIError[]{this.errorFactory.getCIError(500, "jsonutils:1", "Failed to find root network: " + networkSUID)});
+			throw exceptionFactory.getCIException(404, new CIError[]{this.errorFactory.getCIError(404, "jsonutils:1", "Failed to find root network: " + networkSUID)});
 		}
 		
 		final CyNetworkViewWriterFactory cxWriterFactory = viewWriterFactoryManager.getCxFactory();
+		
+		if (cxWriterFactory == null) {
+			throw exceptionFactory.getCIException(404, new CIError[]{this.errorFactory.getCIError(500, "jsonutils:2", "Failed to load cx service")});
+		}
 		
 		final ByteArrayOutputStream stream = new ByteArrayOutputStream();
 		CyWriter writer = cxWriterFactory.createWriter(stream, root.getSubNetworkList().get(0));
@@ -73,7 +77,7 @@ public class CXResourceImpl implements CXResource
 			jsonString = stream.toString("UTF-8");
 			stream.close();
 		} catch (Exception e) {
-			throw exceptionFactory.getCIException(500, new CIError[]{this.errorFactory.getCIError(500, "jsonutils:2", "Failed to serialize network into CX: " + root)});
+			throw exceptionFactory.getCIException(500, new CIError[]{this.errorFactory.getCIError(500, "jsonutils:3", "Failed to serialize network into CX: " + root)});
 		}
 		return jsonString;
 	}

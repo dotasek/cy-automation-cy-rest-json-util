@@ -47,7 +47,7 @@
 					<instructions>
 						<Bundle-SymbolicName>${bundle.symbolicName}</Bundle-SymbolicName>
 						<Bundle-Version>${project.version}</Bundle-Version>
-						<Private-Package>${bundle.namespace}.internal</Private-Package>
+						<Private-Package>${bundle.namespace}.internal.*</Private-Package>
 						<Bundle-Activator>${bundle.namespace}.internal.CyActivator</Bundle-Activator>
 							<Cytoscape-App-Dependencies>cyREST;3.6.0-SNAPSHOT</Cytoscape-App-Dependencies>
 						<Import-Package>
@@ -159,7 +159,11 @@
 			<artifactId>core-task-api</artifactId>
 			<version>${cytoscape.api.version}</version>
 		</dependency>
-		
+		<dependency>
+			<groupId>org.cytoscape</groupId>
+			<artifactId>work-api</artifactId>
+			<version>${cytoscape.api.version}</version>
+		</dependency>
 		<dependency>
 		 	<groupId>org.cytoscape</groupId>
   			<artifactId>ci-api</artifactId>

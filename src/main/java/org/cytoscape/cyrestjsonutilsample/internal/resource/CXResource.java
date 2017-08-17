@@ -1,4 +1,4 @@
-package org.cytoscape.cyrestjsonutilsample.internal;
+package org.cytoscape.cyrestjsonutilsample.internal.resource;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

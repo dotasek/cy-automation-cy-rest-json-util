@@ -1,4 +1,4 @@
-package org.cytoscape.cyrestjsonutilsample.internal;
+package org.cytoscape.cyrestjsonutilsample.internal.resource;
 
 import java.util.List;
 import java.util.Set;
@@ -13,6 +13,7 @@ import org.cytoscape.model.CyNetworkManager;
 import org.cytoscape.model.CyNode;
 import org.cytoscape.model.CyRow;
 import org.cytoscape.model.CyTable;
+import org.cytoscape.model.VirtualColumnInfo;
 import org.cytoscape.model.json.CyJSONUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -130,6 +131,12 @@ public class JSONUtilResourceImpl implements JSONUtilResource
 		CyNetwork network = networkManager.getNetwork(networkSUID);
 		CyTable cyTable = getTable(network, tableType);
 		CyColumn cyColumn = cyTable.getColumn(columnName);
+	
+		VirtualColumnInfo info = cyColumn.getVirtualColumnInfo();
+		System.out.println(info.getSourceColumn());
+		System.out.println(info.getSourceJoinKey());
+		System.out.println(info.getTargetJoinKey());
+		
 		return cyJSONUtil.toJson(cyColumn, includeDefinition, includeValues);
 	}
 

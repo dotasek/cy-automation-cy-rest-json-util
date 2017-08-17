@@ -1,4 +1,4 @@
-package org.cytoscape.cyrestjsonutilsample.internal;
+package org.cytoscape.cyrestjsonutilsample.internal.resource;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -8,6 +8,9 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.cytoscape.ci.CISwaggerConstants;
+import org.cytoscape.cyrestjsonutilsample.internal.resource.model.CyEdgeModel;
+import org.cytoscape.cyrestjsonutilsample.internal.resource.model.CyNodeModel;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
