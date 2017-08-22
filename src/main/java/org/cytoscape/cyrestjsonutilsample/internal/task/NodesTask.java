@@ -7,7 +7,6 @@ import java.util.Set;
 
 import org.cytoscape.model.CyIdentifiable;
 import org.cytoscape.model.CyNetwork;
-import org.cytoscape.model.CyNetworkManager;
 import org.cytoscape.model.CyNode;
 import org.cytoscape.model.json.CyJSONUtil;
 import org.cytoscape.work.ObservableTask;
@@ -27,7 +26,7 @@ public class NodesTask extends CyJSONUtilTask implements ObservableTask {
 	Collection<CyNode> nodes;
 	
 	@ProvidesTitle
-	public String getTitle() { return "JSONUtil Get Networks"; }
+	public String getTitle() { return "JSONUtil Get Nodes"; }
 
 	
 	@Override

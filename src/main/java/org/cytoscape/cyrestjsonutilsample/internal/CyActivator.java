@@ -16,6 +16,7 @@ import org.cytoscape.cyrestjsonutilsample.internal.resource.CXResourceImpl;
 import org.cytoscape.cyrestjsonutilsample.internal.resource.JSONUtilResourceImpl;
 import org.cytoscape.cyrestjsonutilsample.internal.task.NetworkTaskFactory;
 import org.cytoscape.cyrestjsonutilsample.internal.task.NetworksTaskFactory;
+import org.cytoscape.cyrestjsonutilsample.internal.task.NodeTaskFactory;
 import org.cytoscape.cyrestjsonutilsample.internal.task.NodesTaskFactory;
 import org.cytoscape.io.write.CyNetworkViewWriterFactory;
 import org.cytoscape.model.CyNetworkManager;
@@ -44,7 +45,8 @@ public class CyActivator extends AbstractCyActivator {
 		
 		CyRootNetworkManager cyRootNetworkManager = this.getService(bc, CyRootNetworkManager.class);
 		
-		System.out.println("CyREST JSONUtil Sample start cyJSONUtil found: " + (cyJSONUtil != null));
+		
+		// CyREST Functions
 		try {
 			registerService(bc, new JSONUtilResourceImpl(ciExceptionFactory, ciErrorFactory, cyJSONUtil , networkManager), JSONUtilResourceImpl.class, new Properties());
 			registerService(bc, new CXResourceImpl(ciExceptionFactory, ciErrorFactory, networkManager, cyRootNetworkManager, viewWriterManager, cyJSONUtil), CXResource.class, new Properties());
@@ -53,8 +55,8 @@ public class CyActivator extends AbstractCyActivator {
 		{
 			e.printStackTrace();
 		}
-		System.out.println("CyREST JSONUtil Sample registerService complete");
-		
+
+		//Commands
 		Properties networksTaskFactoryProperties = new Properties();
 		networksTaskFactoryProperties.setProperty(COMMAND_NAMESPACE, "jsonutil");
 		networksTaskFactoryProperties.setProperty(COMMAND, "networks");
@@ -81,6 +83,15 @@ public class CyActivator extends AbstractCyActivator {
 
 		TaskFactory nodesTaskFactory = new NodesTaskFactory(cyJSONUtil);
 		registerAllServices(bc, nodesTaskFactory, nodesTaskFactoryProperties);
+		
+		Properties nodeTaskFactoryProperties = new Properties();
+		nodeTaskFactoryProperties.setProperty(COMMAND_NAMESPACE, "jsonutil");
+		nodeTaskFactoryProperties.setProperty(COMMAND, "node");
+		nodeTaskFactoryProperties.setProperty(COMMAND_DESCRIPTION,  "return a node");
+		nodeTaskFactoryProperties.setProperty(COMMAND_LONG_DESCRIPTION, "return a node");
+
+		TaskFactory nodeTaskFactory = new NodeTaskFactory(cyJSONUtil);
+		registerAllServices(bc, nodeTaskFactory, nodeTaskFactoryProperties);
 	}
 }
 
