@@ -14,10 +14,13 @@ import org.cytoscape.ci.CIExceptionFactory;
 import org.cytoscape.cyrestjsonutilsample.internal.resource.CXResource;
 import org.cytoscape.cyrestjsonutilsample.internal.resource.CXResourceImpl;
 import org.cytoscape.cyrestjsonutilsample.internal.resource.JSONUtilResourceImpl;
+import org.cytoscape.cyrestjsonutilsample.internal.task.EdgeTaskFactory;
+import org.cytoscape.cyrestjsonutilsample.internal.task.EdgesTaskFactory;
 import org.cytoscape.cyrestjsonutilsample.internal.task.NetworkTaskFactory;
 import org.cytoscape.cyrestjsonutilsample.internal.task.NetworksTaskFactory;
 import org.cytoscape.cyrestjsonutilsample.internal.task.NodeTaskFactory;
 import org.cytoscape.cyrestjsonutilsample.internal.task.NodesTaskFactory;
+import org.cytoscape.cyrestjsonutilsample.internal.task.TableTaskFactory;
 import org.cytoscape.io.write.CyNetworkViewWriterFactory;
 import org.cytoscape.model.CyNetworkManager;
 import org.cytoscape.model.json.CyJSONUtil;
@@ -92,6 +95,34 @@ public class CyActivator extends AbstractCyActivator {
 
 		TaskFactory nodeTaskFactory = new NodeTaskFactory(cyJSONUtil);
 		registerAllServices(bc, nodeTaskFactory, nodeTaskFactoryProperties);
+		
+		
+		Properties edgesTaskFactoryProperties = new Properties();
+		edgesTaskFactoryProperties.setProperty(COMMAND_NAMESPACE, "jsonutil");
+		edgesTaskFactoryProperties.setProperty(COMMAND, "edges");
+		edgesTaskFactoryProperties.setProperty(COMMAND_DESCRIPTION,  "return all the edges in a network");
+		edgesTaskFactoryProperties.setProperty(COMMAND_LONG_DESCRIPTION, "return all the edges in a network");
+
+		TaskFactory edgesTaskFactory = new EdgesTaskFactory(cyJSONUtil);
+		registerAllServices(bc, edgesTaskFactory, edgesTaskFactoryProperties);
+		
+		Properties edgeTaskFactoryProperties = new Properties();
+		edgeTaskFactoryProperties.setProperty(COMMAND_NAMESPACE, "jsonutil");
+		edgeTaskFactoryProperties.setProperty(COMMAND, "edge");
+		edgeTaskFactoryProperties.setProperty(COMMAND_DESCRIPTION,  "return an edge");
+		edgeTaskFactoryProperties.setProperty(COMMAND_LONG_DESCRIPTION, "return an edge");
+
+		TaskFactory edgeTaskFactory = new EdgeTaskFactory(cyJSONUtil);
+		registerAllServices(bc, edgeTaskFactory, edgeTaskFactoryProperties);
+		
+		Properties tableTaskFactoryProperties = new Properties();
+		tableTaskFactoryProperties.setProperty(COMMAND_NAMESPACE, "jsonutil");
+		tableTaskFactoryProperties.setProperty(COMMAND, "table");
+		tableTaskFactoryProperties.setProperty(COMMAND_DESCRIPTION,  "return a table");
+		tableTaskFactoryProperties.setProperty(COMMAND_LONG_DESCRIPTION, "return a table");
+
+		TaskFactory tableTaskFactory = new TableTaskFactory(cyJSONUtil);
+		registerAllServices(bc, tableTaskFactory, tableTaskFactoryProperties);
 	}
 }
 

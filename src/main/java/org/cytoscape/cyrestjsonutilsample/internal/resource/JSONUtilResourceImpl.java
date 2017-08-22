@@ -28,20 +28,6 @@ public class JSONUtilResourceImpl implements JSONUtilResource
 	CyJSONUtil cyJSONUtil;
 	CyNetworkManager networkManager;
 
-	private static enum TableType {
-		DEFAULT_NODE("defaultnode"), DEFAULT_EDGE("defaultedge"), DEFAULT_NETWORK("defaultnetwork");
-
-		private final String type;
-
-		private TableType(final String type) {
-			this.type = type;
-		}
-
-		private String getType() {
-			return this.type;
-		}
-	}
-	
 	private CyTable getTable(CyNetwork network, String tableType) {
 		CyTable table;
 		if (tableType.equals(TableType.DEFAULT_NODE.getType())) {
