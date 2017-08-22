@@ -14,6 +14,8 @@ import org.cytoscape.ci.CIExceptionFactory;
 import org.cytoscape.cyrestjsonutilsample.internal.resource.CXResource;
 import org.cytoscape.cyrestjsonutilsample.internal.resource.CXResourceImpl;
 import org.cytoscape.cyrestjsonutilsample.internal.resource.JSONUtilResourceImpl;
+import org.cytoscape.cyrestjsonutilsample.internal.task.ColumnTaskFactory;
+import org.cytoscape.cyrestjsonutilsample.internal.task.ColumnsTaskFactory;
 import org.cytoscape.cyrestjsonutilsample.internal.task.EdgeTaskFactory;
 import org.cytoscape.cyrestjsonutilsample.internal.task.EdgesTaskFactory;
 import org.cytoscape.cyrestjsonutilsample.internal.task.NetworkTaskFactory;
@@ -123,6 +125,24 @@ public class CyActivator extends AbstractCyActivator {
 
 		TaskFactory tableTaskFactory = new TableTaskFactory(cyJSONUtil);
 		registerAllServices(bc, tableTaskFactory, tableTaskFactoryProperties);
+		
+		Properties columnsTaskFactoryProperties = new Properties();
+		columnsTaskFactoryProperties.setProperty(COMMAND_NAMESPACE, "jsonutil");
+		columnsTaskFactoryProperties.setProperty(COMMAND, "columns");
+		columnsTaskFactoryProperties.setProperty(COMMAND_DESCRIPTION,  "return all columns in a table");
+		columnsTaskFactoryProperties.setProperty(COMMAND_LONG_DESCRIPTION, "return all columns in a table");
+
+		TaskFactory columnsTaskFactory = new ColumnsTaskFactory(cyJSONUtil);
+		registerAllServices(bc, columnsTaskFactory, columnsTaskFactoryProperties);
+		
+		Properties columnTaskFactoryProperties = new Properties();
+		columnTaskFactoryProperties.setProperty(COMMAND_NAMESPACE, "jsonutil");
+		columnTaskFactoryProperties.setProperty(COMMAND, "column");
+		columnTaskFactoryProperties.setProperty(COMMAND_DESCRIPTION,  "return a columns");
+		columnTaskFactoryProperties.setProperty(COMMAND_LONG_DESCRIPTION, "return a column");
+
+		TaskFactory columnTaskFactory = new ColumnTaskFactory(cyJSONUtil);
+		registerAllServices(bc, columnTaskFactory, columnTaskFactoryProperties);
 	}
 }
 
