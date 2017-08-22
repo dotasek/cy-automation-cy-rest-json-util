@@ -22,6 +22,7 @@ import org.cytoscape.cyrestjsonutilsample.internal.task.NetworkTaskFactory;
 import org.cytoscape.cyrestjsonutilsample.internal.task.NetworksTaskFactory;
 import org.cytoscape.cyrestjsonutilsample.internal.task.NodeTaskFactory;
 import org.cytoscape.cyrestjsonutilsample.internal.task.NodesTaskFactory;
+import org.cytoscape.cyrestjsonutilsample.internal.task.RowTaskFactory;
 import org.cytoscape.cyrestjsonutilsample.internal.task.TableTaskFactory;
 import org.cytoscape.io.write.CyNetworkViewWriterFactory;
 import org.cytoscape.model.CyNetworkManager;
@@ -143,6 +144,15 @@ public class CyActivator extends AbstractCyActivator {
 
 		TaskFactory columnTaskFactory = new ColumnTaskFactory(cyJSONUtil);
 		registerAllServices(bc, columnTaskFactory, columnTaskFactoryProperties);
+		
+		Properties rowTaskFactoryProperties = new Properties();
+		rowTaskFactoryProperties.setProperty(COMMAND_NAMESPACE, "jsonutil");
+		rowTaskFactoryProperties.setProperty(COMMAND, "row");
+		rowTaskFactoryProperties.setProperty(COMMAND_DESCRIPTION,  "return a row");
+		rowTaskFactoryProperties.setProperty(COMMAND_LONG_DESCRIPTION, "return a row");
+
+		TaskFactory rowTaskFactory = new RowTaskFactory(cyJSONUtil);
+		registerAllServices(bc, rowTaskFactory, rowTaskFactoryProperties);
 	}
 }
 
