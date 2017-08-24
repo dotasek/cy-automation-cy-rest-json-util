@@ -22,6 +22,8 @@ import org.cytoscape.cyrestjsonutilsample.internal.task.NetworkTaskFactory;
 import org.cytoscape.cyrestjsonutilsample.internal.task.NetworksTaskFactory;
 import org.cytoscape.cyrestjsonutilsample.internal.task.NodeTaskFactory;
 import org.cytoscape.cyrestjsonutilsample.internal.task.NodesTaskFactory;
+import org.cytoscape.cyrestjsonutilsample.internal.task.RootNetworkTaskFactory;
+import org.cytoscape.cyrestjsonutilsample.internal.task.RootNetworksTaskFactory;
 import org.cytoscape.cyrestjsonutilsample.internal.task.RowTaskFactory;
 import org.cytoscape.cyrestjsonutilsample.internal.task.TableTaskFactory;
 import org.cytoscape.io.write.CyNetworkViewWriterFactory;
@@ -153,6 +155,24 @@ public class CyActivator extends AbstractCyActivator {
 
 		TaskFactory rowTaskFactory = new RowTaskFactory(cyJSONUtil);
 		registerAllServices(bc, rowTaskFactory, rowTaskFactoryProperties);
+		
+		Properties rootNetworksTaskFactoryProperties = new Properties();
+		rootNetworksTaskFactoryProperties.setProperty(COMMAND_NAMESPACE, "jsonutil");
+		rootNetworksTaskFactoryProperties.setProperty(COMMAND, "rootnetworks");
+		rootNetworksTaskFactoryProperties.setProperty(COMMAND_DESCRIPTION,  "return all root networks");
+		rootNetworksTaskFactoryProperties.setProperty(COMMAND_LONG_DESCRIPTION, "return all root networks");
+
+		TaskFactory rootNetworksTaskFactory = new RootNetworksTaskFactory(cyJSONUtil, networkManager, cyRootNetworkManager);
+		registerAllServices(bc, rootNetworksTaskFactory, rootNetworksTaskFactoryProperties);
+		
+		Properties rootNetworkTaskFactoryProperties = new Properties();
+		rootNetworkTaskFactoryProperties.setProperty(COMMAND_NAMESPACE, "jsonutil");
+		rootNetworkTaskFactoryProperties.setProperty(COMMAND, "rootnetwork");
+		rootNetworkTaskFactoryProperties.setProperty(COMMAND_DESCRIPTION,  "return a root network");
+		rootNetworkTaskFactoryProperties.setProperty(COMMAND_LONG_DESCRIPTION, "return a root network");
+
+		TaskFactory rootNetworkTaskFactory = new RootNetworkTaskFactory(networkManager, cyRootNetworkManager, viewWriterManager);
+		registerAllServices(bc, rootNetworkTaskFactory, rootNetworkTaskFactoryProperties);
 	}
 }
 

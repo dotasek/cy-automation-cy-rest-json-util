@@ -49,8 +49,7 @@ public class CXResourceImpl implements CXResource
 	@Override
 	@CIWrapping
 	public String rootNetwork(Long networkSUID) {
-		
-		
+	
 		CyRootNetwork root = null;
 		for (CyNetwork network : networkManager.getNetworkSet()) {
 			CyRootNetwork currentRootNetwork = cyRootNetworkManager.getRootNetwork(network);
