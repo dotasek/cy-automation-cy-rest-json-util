@@ -1,8 +1,6 @@
 package org.cytoscape.cyrestjsonutilsample.internal.task;
 
-import org.cytoscape.model.CyNetworkManager;
 import org.cytoscape.model.json.CyJSONUtil;
-import org.cytoscape.work.AbstractTaskFactory;
 import org.cytoscape.work.TaskIterator;
 
 public class NetworkTaskFactory extends CyJSONUtilTaskFactory{

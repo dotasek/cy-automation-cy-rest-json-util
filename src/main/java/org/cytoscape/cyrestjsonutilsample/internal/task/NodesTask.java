@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import org.cytoscape.model.CyIdentifiable;
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
 import org.cytoscape.model.json.CyJSONUtil;
@@ -13,6 +12,7 @@ import org.cytoscape.work.ObservableTask;
 import org.cytoscape.work.ProvidesTitle;
 import org.cytoscape.work.TaskMonitor;
 import org.cytoscape.work.Tunable;
+import org.cytoscape.work.json.JSONResult;
 
 public class NodesTask extends CyJSONUtilTask implements ObservableTask {
 	
@@ -40,12 +40,12 @@ public class NodesTask extends CyJSONUtilTask implements ObservableTask {
 		if (type.equals(Set.class)) {
 			return (R) nodes;
 		} 
-		/* This is where we return JSON from this Task. 
-		 */
-		else if (type.equals(CyIdentifiablesJSONResult.class)) {
-			return (R) new CyIdentifiablesJSONResult(jsonUtil, (Collection<? extends CyIdentifiable>)nodes);
-		} else if (type.equals(String.class)) {
-			return (R) (new CyIdentifiablesJSONResult(jsonUtil, (Collection<? extends CyIdentifiable>)nodes).getJSON());
+		else if (type.equals(String.class)) {	
+			return (R) getJson(nodes);
+		} 
+		else if (type.equals(JSONResult.class)) {
+			JSONResult res = () -> {return getJson(nodes);};
+			return (R)(res);
 		}
 		else {
 			return null;
@@ -54,6 +54,6 @@ public class NodesTask extends CyJSONUtilTask implements ObservableTask {
 
 	@Override 
 	public List<Class<?>> getResultClasses() {
-		return Arrays.asList(String.class, CyIdentifiablesJSONResult.class);
+		return Arrays.asList(String.class, JSONResult.class);
 	}
 }

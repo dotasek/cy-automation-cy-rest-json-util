@@ -5,12 +5,12 @@ import java.util.List;
 
 import org.cytoscape.model.CyEdge;
 import org.cytoscape.model.CyNetwork;
-import org.cytoscape.model.CyNode;
 import org.cytoscape.model.json.CyJSONUtil;
 import org.cytoscape.work.ObservableTask;
 import org.cytoscape.work.ProvidesTitle;
 import org.cytoscape.work.TaskMonitor;
 import org.cytoscape.work.Tunable;
+import org.cytoscape.work.json.JSONResult;
 
 public class EdgeTask extends CyJSONUtilTask implements ObservableTask {
 	
@@ -37,19 +37,23 @@ public class EdgeTask extends CyJSONUtilTask implements ObservableTask {
 		edge = network.getEdge(edgeSUID);
 	}
 	
+	private final String getJson(CyNetwork network, CyEdge edge) {
+		return jsonUtil.toJson(network, edge);
+	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R getResults(Class<? extends R> type) {
 		
-		if (type.equals(CyNode.class)) {
+		if (type.equals(CyEdge.class)) {
 			return (R) edge;
 		} 
-		/* This is where we return JSON from this Task. 
-		 */
-		else if (type.equals(CyNodeJSONResult.class)) {
-			return (R) new CyEdgeJSONResult(jsonUtil, network, edge);
-		} else if (type.equals(String.class)) {
-			return (R) (new CyEdgeJSONResult(jsonUtil, network, edge).getJSON());
+		else if (type.equals(String.class)) {	
+			return (R) getJson(network, edge);
+		} 
+		else if (type.equals(JSONResult.class)) {
+			JSONResult res = () -> {return getJson(network, edge);};
+			return (R)(res);
 		}
 		else {
 			return null;
@@ -58,6 +62,6 @@ public class EdgeTask extends CyJSONUtilTask implements ObservableTask {
 
 	@Override 
 	public List<Class<?>> getResultClasses() {
-		return Arrays.asList(String.class, CyNodeJSONResult.class);
+		return Arrays.asList(CyEdge.class, String.class, JSONResult.class);
 	}
 }

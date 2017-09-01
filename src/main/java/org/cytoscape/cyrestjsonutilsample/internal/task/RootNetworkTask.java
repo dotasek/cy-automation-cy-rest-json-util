@@ -1,11 +1,13 @@
 package org.cytoscape.cyrestjsonutilsample.internal.task;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 import java.util.List;
 import org.cytoscape.cyrestjsonutilsample.internal.ViewWriterFactoryManager;
+import org.cytoscape.io.write.CyNetworkViewWriterFactory;
+import org.cytoscape.io.write.CyWriter;
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNetworkManager;
-import org.cytoscape.model.json.CyJSONUtil;
 import org.cytoscape.model.subnetwork.CyRootNetwork;
 import org.cytoscape.model.subnetwork.CyRootNetworkManager;
 import org.cytoscape.work.AbstractTask;
@@ -13,6 +15,7 @@ import org.cytoscape.work.ObservableTask;
 import org.cytoscape.work.ProvidesTitle;
 import org.cytoscape.work.TaskMonitor;
 import org.cytoscape.work.Tunable;
+import org.cytoscape.work.json.JSONResult;
 
 public class RootNetworkTask extends AbstractTask implements ObservableTask {
 	
@@ -34,6 +37,22 @@ public class RootNetworkTask extends AbstractTask implements ObservableTask {
 	@ProvidesTitle
 	public String getTitle() { return "JSONUtil Get Root Networks"; }
 
+	private final String getJson(CyRootNetwork cyRootNetwork, ViewWriterFactoryManager viewWriterFactoryManager) {
+		
+		final CyNetworkViewWriterFactory cxWriterFactory = viewWriterFactoryManager.getCxFactory();
+			
+		final ByteArrayOutputStream stream = new ByteArrayOutputStream();
+		CyWriter writer = cxWriterFactory.createWriter(stream, cyRootNetwork.getSubNetworkList().get(0));
+		String jsonString = null;
+		try {
+			writer.run(null);
+			jsonString = stream.toString("UTF-8");
+			stream.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return jsonString;
+	}
 	
 	@Override
 	public void run(TaskMonitor arg0) throws Exception {
@@ -52,12 +71,12 @@ public class RootNetworkTask extends AbstractTask implements ObservableTask {
 		if (type.equals(CyRootNetwork.class)) {
 			return (R) rootNetwork;
 		} 
-		/* This is where we return JSON from this Task. 
-		 */
-		else if (type.equals(CyRootNetworkJSONResult.class)) {
-			return (R) new CyRootNetworkJSONResult(rootNetwork, viewWriterFactoryManager);
-		} else if (type.equals(String.class)) {
-			return (R) (new CyRootNetworkJSONResult(rootNetwork, viewWriterFactoryManager).getJSON());
+		else if (type.equals(String.class)) {	
+			return (R) getJson(rootNetwork, viewWriterFactoryManager);
+		} 
+		else if (type.equals(JSONResult.class)) {
+			JSONResult res = () -> {return getJson(rootNetwork, viewWriterFactoryManager);};
+			return (R)(res);
 		}
 		else {
 			return null;
@@ -66,6 +85,6 @@ public class RootNetworkTask extends AbstractTask implements ObservableTask {
 
 	@Override 
 	public List<Class<?>> getResultClasses() {
-		return Arrays.asList(String.class, CyRootNetworkJSONResult.class);
+		return Arrays.asList(String.class, JSONResult.class);
 	}
 }

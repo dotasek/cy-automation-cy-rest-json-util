@@ -15,6 +15,7 @@ import org.cytoscape.work.ObservableTask;
 import org.cytoscape.work.ProvidesTitle;
 import org.cytoscape.work.TaskMonitor;
 import org.cytoscape.work.Tunable;
+import org.cytoscape.work.json.JSONResult;
 
 public class TableTask extends CyJSONUtilTask implements ObservableTask {
 	
@@ -42,6 +43,10 @@ public class TableTask extends CyJSONUtilTask implements ObservableTask {
 		
 	}
 	
+	private final String getJson(CyTable table, boolean includeDefinition, boolean includeRows) {
+		return jsonUtil.toJson(table, includeDefinition, includeRows);
+	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R getResults(Class<? extends R> type) {
@@ -49,12 +54,12 @@ public class TableTask extends CyJSONUtilTask implements ObservableTask {
 		if (type.equals(CyTable.class)) {
 			return (R) table;
 		} 
-		/* This is where we return JSON from this Task. 
-		 */
-		else if (type.equals(CyTableJSONResult.class)) {
-			return (R) new CyTableJSONResult(jsonUtil, table, includeDefinition, includeRows);
-		} else if (type.equals(String.class)) {
-			return (R) (new CyTableJSONResult(jsonUtil, table, includeDefinition, includeRows).getJSON());
+		else if (type.equals(String.class)) {	
+			return (R) getJson(table, includeDefinition, includeRows);
+		} 
+		else if (type.equals(JSONResult.class)) {
+			JSONResult res = () -> {return getJson(table, includeDefinition, includeRows);};
+			return (R)(res);
 		}
 		else {
 			return null;
@@ -63,6 +68,6 @@ public class TableTask extends CyJSONUtilTask implements ObservableTask {
 
 	@Override 
 	public List<Class<?>> getResultClasses() {
-		return Arrays.asList(String.class, CyTableJSONResult.class);
+		return Arrays.asList(String.class, JSONResult.class);
 	}
 }

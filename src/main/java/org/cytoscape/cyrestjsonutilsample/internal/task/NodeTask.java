@@ -1,11 +1,7 @@
 package org.cytoscape.cyrestjsonutilsample.internal.task;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
-import java.util.Set;
-
-import org.cytoscape.model.CyIdentifiable;
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
 import org.cytoscape.model.json.CyJSONUtil;
@@ -13,6 +9,7 @@ import org.cytoscape.work.ObservableTask;
 import org.cytoscape.work.ProvidesTitle;
 import org.cytoscape.work.TaskMonitor;
 import org.cytoscape.work.Tunable;
+import org.cytoscape.work.json.JSONResult;
 
 public class NodeTask extends CyJSONUtilTask implements ObservableTask {
 	
@@ -39,6 +36,10 @@ public class NodeTask extends CyJSONUtilTask implements ObservableTask {
 		node = network.getNode(nodeSUID);
 	}
 	
+	private final String getJson(CyNetwork network, CyNode node) {
+		return jsonUtil.toJson(network, node);
+	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R getResults(Class<? extends R> type) {
@@ -46,12 +47,12 @@ public class NodeTask extends CyJSONUtilTask implements ObservableTask {
 		if (type.equals(CyNode.class)) {
 			return (R) node;
 		} 
-		/* This is where we return JSON from this Task. 
-		 */
-		else if (type.equals(CyNodeJSONResult.class)) {
-			return (R) new CyNodeJSONResult(jsonUtil, network, node);
-		} else if (type.equals(String.class)) {
-			return (R) (new CyNodeJSONResult(jsonUtil, network, node).getJSON());
+		else if (type.equals(String.class)) {	
+			return (R) getJson(network, node);
+		} 
+		else if (type.equals(JSONResult.class)) {
+			JSONResult res = () -> {return getJson(network, node);};
+			return (R)(res);
 		}
 		else {
 			return null;
@@ -60,6 +61,6 @@ public class NodeTask extends CyJSONUtilTask implements ObservableTask {
 
 	@Override 
 	public List<Class<?>> getResultClasses() {
-		return Arrays.asList(String.class, CyNodeJSONResult.class);
+		return Arrays.asList(String.class, JSONResult.class);
 	}
 }

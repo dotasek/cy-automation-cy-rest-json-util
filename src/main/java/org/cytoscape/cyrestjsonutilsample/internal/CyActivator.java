@@ -1,12 +1,13 @@
 package org.cytoscape.cyrestjsonutilsample.internal;
 
-
 import org.osgi.framework.BundleContext;
 
 import static org.cytoscape.work.ServiceProperties.COMMAND;
 import static org.cytoscape.work.ServiceProperties.COMMAND_DESCRIPTION;
 import static org.cytoscape.work.ServiceProperties.COMMAND_LONG_DESCRIPTION;
 import static org.cytoscape.work.ServiceProperties.COMMAND_NAMESPACE;
+import static org.cytoscape.work.ServiceProperties.COMMAND_SUPPORTS_JSON;
+import static org.cytoscape.work.ServiceProperties.COMMAND_EXAMPLE_JSON;
 import java.util.Properties;
 
 import org.cytoscape.ci.CIErrorFactory;
@@ -70,7 +71,10 @@ public class CyActivator extends AbstractCyActivator {
 		networksTaskFactoryProperties.setProperty(COMMAND, "networks");
 		networksTaskFactoryProperties.setProperty(COMMAND_DESCRIPTION,  "return all networks");
 		networksTaskFactoryProperties.setProperty(COMMAND_LONG_DESCRIPTION, "return all networks");
-
+		networksTaskFactoryProperties.setProperty(COMMAND_SUPPORTS_JSON, "true");
+		networksTaskFactoryProperties.setProperty(COMMAND_EXAMPLE_JSON, "[101,102,103]");
+	
+		
 		TaskFactory networksTaskFactory = new NetworksTaskFactory(cyJSONUtil, networkManager);
 		registerAllServices(bc, networksTaskFactory, networksTaskFactoryProperties);
 		
@@ -79,7 +83,10 @@ public class CyActivator extends AbstractCyActivator {
 		networkTaskFactoryProperties.setProperty(COMMAND, "network");
 		networkTaskFactoryProperties.setProperty(COMMAND_DESCRIPTION,  "return a network");
 		networkTaskFactoryProperties.setProperty(COMMAND_LONG_DESCRIPTION, "return a network");
-
+		networkTaskFactoryProperties.setProperty(COMMAND_SUPPORTS_JSON, "true");
+		networkTaskFactoryProperties.setProperty(COMMAND_EXAMPLE_JSON, "{\"SUID\":\"101\"}");
+		
+		
 		TaskFactory networkTaskFactory = new NetworkTaskFactory(cyJSONUtil);
 		registerAllServices(bc, networkTaskFactory, networkTaskFactoryProperties);
 		
@@ -88,7 +95,9 @@ public class CyActivator extends AbstractCyActivator {
 		nodesTaskFactoryProperties.setProperty(COMMAND, "nodes");
 		nodesTaskFactoryProperties.setProperty(COMMAND_DESCRIPTION,  "return all the nodes in a network");
 		nodesTaskFactoryProperties.setProperty(COMMAND_LONG_DESCRIPTION, "return all the nodes in a network");
-
+		nodesTaskFactoryProperties.setProperty(COMMAND_SUPPORTS_JSON, "true");
+		nodesTaskFactoryProperties.setProperty(COMMAND_EXAMPLE_JSON, "[101,102,103]");
+		
 		TaskFactory nodesTaskFactory = new NodesTaskFactory(cyJSONUtil);
 		registerAllServices(bc, nodesTaskFactory, nodesTaskFactoryProperties);
 		
@@ -97,7 +106,9 @@ public class CyActivator extends AbstractCyActivator {
 		nodeTaskFactoryProperties.setProperty(COMMAND, "node");
 		nodeTaskFactoryProperties.setProperty(COMMAND_DESCRIPTION,  "return a node");
 		nodeTaskFactoryProperties.setProperty(COMMAND_LONG_DESCRIPTION, "return a node");
-
+		nodeTaskFactoryProperties.setProperty(COMMAND_SUPPORTS_JSON, "true");
+		nodeTaskFactoryProperties.setProperty(COMMAND_EXAMPLE_JSON, "{\"SUID\":\"101\"}");
+	
 		TaskFactory nodeTaskFactory = new NodeTaskFactory(cyJSONUtil);
 		registerAllServices(bc, nodeTaskFactory, nodeTaskFactoryProperties);
 		
@@ -107,7 +118,9 @@ public class CyActivator extends AbstractCyActivator {
 		edgesTaskFactoryProperties.setProperty(COMMAND, "edges");
 		edgesTaskFactoryProperties.setProperty(COMMAND_DESCRIPTION,  "return all the edges in a network");
 		edgesTaskFactoryProperties.setProperty(COMMAND_LONG_DESCRIPTION, "return all the edges in a network");
-
+		edgesTaskFactoryProperties.setProperty(COMMAND_SUPPORTS_JSON, "true");
+		edgesTaskFactoryProperties.setProperty(COMMAND_EXAMPLE_JSON, "[101,102,103]");
+	
 		TaskFactory edgesTaskFactory = new EdgesTaskFactory(cyJSONUtil);
 		registerAllServices(bc, edgesTaskFactory, edgesTaskFactoryProperties);
 		
@@ -116,7 +129,9 @@ public class CyActivator extends AbstractCyActivator {
 		edgeTaskFactoryProperties.setProperty(COMMAND, "edge");
 		edgeTaskFactoryProperties.setProperty(COMMAND_DESCRIPTION,  "return an edge");
 		edgeTaskFactoryProperties.setProperty(COMMAND_LONG_DESCRIPTION, "return an edge");
-
+		edgeTaskFactoryProperties.setProperty(COMMAND_SUPPORTS_JSON, "true");
+		edgeTaskFactoryProperties.setProperty(COMMAND_EXAMPLE_JSON, "{\"SUID\":\"101\"}");
+		
 		TaskFactory edgeTaskFactory = new EdgeTaskFactory(cyJSONUtil);
 		registerAllServices(bc, edgeTaskFactory, edgeTaskFactoryProperties);
 		
@@ -125,6 +140,8 @@ public class CyActivator extends AbstractCyActivator {
 		tableTaskFactoryProperties.setProperty(COMMAND, "table");
 		tableTaskFactoryProperties.setProperty(COMMAND_DESCRIPTION,  "return a table");
 		tableTaskFactoryProperties.setProperty(COMMAND_LONG_DESCRIPTION, "return a table");
+		tableTaskFactoryProperties.setProperty(COMMAND_SUPPORTS_JSON, "true");
+		tableTaskFactoryProperties.setProperty(COMMAND_EXAMPLE_JSON, "{}");
 
 		TaskFactory tableTaskFactory = new TableTaskFactory(cyJSONUtil);
 		registerAllServices(bc, tableTaskFactory, tableTaskFactoryProperties);
@@ -134,7 +151,9 @@ public class CyActivator extends AbstractCyActivator {
 		columnsTaskFactoryProperties.setProperty(COMMAND, "columns");
 		columnsTaskFactoryProperties.setProperty(COMMAND_DESCRIPTION,  "return all columns in a table");
 		columnsTaskFactoryProperties.setProperty(COMMAND_LONG_DESCRIPTION, "return all columns in a table");
-
+		columnsTaskFactoryProperties.setProperty(COMMAND_SUPPORTS_JSON, "true");
+		columnsTaskFactoryProperties.setProperty(COMMAND_EXAMPLE_JSON, "[\"SUID\", \"name\"]");
+		
 		TaskFactory columnsTaskFactory = new ColumnsTaskFactory(cyJSONUtil);
 		registerAllServices(bc, columnsTaskFactory, columnsTaskFactoryProperties);
 		
@@ -143,7 +162,9 @@ public class CyActivator extends AbstractCyActivator {
 		columnTaskFactoryProperties.setProperty(COMMAND, "column");
 		columnTaskFactoryProperties.setProperty(COMMAND_DESCRIPTION,  "return a columns");
 		columnTaskFactoryProperties.setProperty(COMMAND_LONG_DESCRIPTION, "return a column");
-
+		columnTaskFactoryProperties.setProperty(COMMAND_SUPPORTS_JSON, "true");
+		columnTaskFactoryProperties.setProperty(COMMAND_EXAMPLE_JSON, "{}");
+		
 		TaskFactory columnTaskFactory = new ColumnTaskFactory(cyJSONUtil);
 		registerAllServices(bc, columnTaskFactory, columnTaskFactoryProperties);
 		
@@ -152,7 +173,10 @@ public class CyActivator extends AbstractCyActivator {
 		rowTaskFactoryProperties.setProperty(COMMAND, "row");
 		rowTaskFactoryProperties.setProperty(COMMAND_DESCRIPTION,  "return a row");
 		rowTaskFactoryProperties.setProperty(COMMAND_LONG_DESCRIPTION, "return a row");
+		rowTaskFactoryProperties.setProperty(COMMAND_SUPPORTS_JSON, "true");
+		rowTaskFactoryProperties.setProperty(COMMAND_EXAMPLE_JSON, "{}");
 
+		
 		TaskFactory rowTaskFactory = new RowTaskFactory(cyJSONUtil);
 		registerAllServices(bc, rowTaskFactory, rowTaskFactoryProperties);
 		
@@ -161,7 +185,10 @@ public class CyActivator extends AbstractCyActivator {
 		rootNetworksTaskFactoryProperties.setProperty(COMMAND, "rootnetworks");
 		rootNetworksTaskFactoryProperties.setProperty(COMMAND_DESCRIPTION,  "return all root networks");
 		rootNetworksTaskFactoryProperties.setProperty(COMMAND_LONG_DESCRIPTION, "return all root networks");
-
+		rootNetworksTaskFactoryProperties.setProperty(COMMAND_SUPPORTS_JSON, "true");
+		rootNetworksTaskFactoryProperties.setProperty(COMMAND_EXAMPLE_JSON, "[101,102,103]");
+	
+		
 		TaskFactory rootNetworksTaskFactory = new RootNetworksTaskFactory(cyJSONUtil, networkManager, cyRootNetworkManager);
 		registerAllServices(bc, rootNetworksTaskFactory, rootNetworksTaskFactoryProperties);
 		
@@ -170,7 +197,10 @@ public class CyActivator extends AbstractCyActivator {
 		rootNetworkTaskFactoryProperties.setProperty(COMMAND, "rootnetwork");
 		rootNetworkTaskFactoryProperties.setProperty(COMMAND_DESCRIPTION,  "return a root network");
 		rootNetworkTaskFactoryProperties.setProperty(COMMAND_LONG_DESCRIPTION, "return a root network");
+		rootNetworkTaskFactoryProperties.setProperty(COMMAND_SUPPORTS_JSON, "true");
+		rootNetworkTaskFactoryProperties.setProperty(COMMAND_EXAMPLE_JSON, "{}");
 
+		
 		TaskFactory rootNetworkTaskFactory = new RootNetworkTaskFactory(networkManager, cyRootNetworkManager, viewWriterManager);
 		registerAllServices(bc, rootNetworkTaskFactory, rootNetworkTaskFactoryProperties);
 	}
