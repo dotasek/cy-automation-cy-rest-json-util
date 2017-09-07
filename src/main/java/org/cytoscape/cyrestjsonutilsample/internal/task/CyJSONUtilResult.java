@@ -1,6 +1,6 @@
 package org.cytoscape.cyrestjsonutilsample.internal.task;
 
-import org.cytoscape.model.json.CyJSONUtil;
+import org.cytoscape.util.json.CyJSONUtil;
 import org.cytoscape.work.json.JSONResult;
 
 public abstract class CyJSONUtilResult implements JSONResult {

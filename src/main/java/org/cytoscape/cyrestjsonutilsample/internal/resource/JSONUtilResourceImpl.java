@@ -14,7 +14,7 @@ import org.cytoscape.model.CyNode;
 import org.cytoscape.model.CyRow;
 import org.cytoscape.model.CyTable;
 import org.cytoscape.model.VirtualColumnInfo;
-import org.cytoscape.model.json.CyJSONUtil;
+import org.cytoscape.util.json.CyJSONUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

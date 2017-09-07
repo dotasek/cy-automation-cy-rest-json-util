@@ -29,9 +29,9 @@ import org.cytoscape.cyrestjsonutilsample.internal.task.RowTaskFactory;
 import org.cytoscape.cyrestjsonutilsample.internal.task.TableTaskFactory;
 import org.cytoscape.io.write.CyNetworkViewWriterFactory;
 import org.cytoscape.model.CyNetworkManager;
-import org.cytoscape.model.json.CyJSONUtil;
 import org.cytoscape.model.subnetwork.CyRootNetworkManager;
 import org.cytoscape.service.util.AbstractCyActivator;
+import org.cytoscape.util.json.CyJSONUtil;
 import org.cytoscape.work.TaskFactory;
 
 public class CyActivator extends AbstractCyActivator {

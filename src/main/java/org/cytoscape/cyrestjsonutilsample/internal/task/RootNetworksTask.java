@@ -7,8 +7,8 @@ import java.util.stream.Collectors;
 
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNetworkManager;
-import org.cytoscape.model.json.CyJSONUtil;
 import org.cytoscape.model.subnetwork.CyRootNetworkManager;
+import org.cytoscape.util.json.CyJSONUtil;
 import org.cytoscape.work.ObservableTask;
 import org.cytoscape.work.ProvidesTitle;
 import org.cytoscape.work.TaskMonitor;

@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
-import org.cytoscape.model.json.CyJSONUtil;
+import org.cytoscape.util.json.CyJSONUtil;
 import org.cytoscape.work.ObservableTask;
 import org.cytoscape.work.ProvidesTitle;
 import org.cytoscape.work.TaskMonitor;

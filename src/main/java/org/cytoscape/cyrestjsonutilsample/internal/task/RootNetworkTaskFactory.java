@@ -2,8 +2,8 @@ package org.cytoscape.cyrestjsonutilsample.internal.task;
 
 import org.cytoscape.cyrestjsonutilsample.internal.ViewWriterFactoryManager;
 import org.cytoscape.model.CyNetworkManager;
-import org.cytoscape.model.json.CyJSONUtil;
 import org.cytoscape.model.subnetwork.CyRootNetworkManager;
+import org.cytoscape.util.json.CyJSONUtil;
 import org.cytoscape.work.AbstractTaskFactory;
 import org.cytoscape.work.TaskIterator;
 
